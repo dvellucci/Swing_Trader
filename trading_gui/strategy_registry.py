@@ -6,13 +6,34 @@ ROOT = Path(__file__).resolve().parent.parent
 
 @dataclass(frozen=True)
 class Strategy:
-    key: str
-    label: str
+    id: str
+    display_name: str
     script: Path | None
 
 STRATEGIES = (
-    Strategy('darvas', 'Darvas Strategy', ROOT / 'strategies' / 'darvas' / 'screener.py'),
-    Strategy('mean_reversion', 'Mean Reversion 4.0 (coming soon)', None),
-    Strategy('moving_average', 'Moving Averages 5.0 (coming soon)', None),
+    Strategy(
+        id="darvas",
+        display_name="Darvas Strategy",
+        script=ROOT / "strategies" / "darvas" / "screener.py",
+    ),
+    Strategy(
+        id="mean_reversion",
+        display_name="Mean Reversion 4.0 (coming soon)",
+        script=None,
+    ),
+    Strategy(
+        id="moving_average",
+        display_name="Moving Averages 5.0 (coming soon)",
+        script=None,
+    ),
 )
-BY_LABEL = {strategy.label: strategy for strategy in STRATEGIES}
+
+BY_ID = {
+    strategy.id: strategy
+    for strategy in STRATEGIES
+}
+
+BY_LABEL = {
+    strategy.display_name: strategy
+    for strategy in STRATEGIES
+}

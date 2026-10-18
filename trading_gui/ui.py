@@ -10,10 +10,10 @@ from tkinter import messagebox
 import customtkinter as ctk
 
 from .analysis import find_new_report, normalize_ticker, parse_verdict, verdict_color_key
-from .config import (APP_NAME, COLORS, DEFAULT_TICKER, MESSAGES, MIN_WINDOW_SIZE,
-                     POLL_INTERVAL_MS, STRATEGY_DARVAS, WINDOW_SIZE)
+from .config import (APP_NAME, COLORS, MESSAGES, MIN_WINDOW_SIZE,
+                     POLL_INTERVAL_MS, WINDOW_SIZE)
 from .runner import ScriptRunner
-from .strategy_registry import BY_LABEL, STRATEGIES as REGISTERED_STRATEGIES
+from .strategy_registry import BY_LABEL, BY_ID, STRATEGIES as REGISTERED_STRATEGIES
 
 
 class TradingApp(ctk.CTk):
@@ -22,9 +22,9 @@ class TradingApp(ctk.CTk):
         self.title(APP_NAME)
         self.geometry(WINDOW_SIZE)
         self.minsize(*MIN_WINDOW_SIZE)
-        self.bundled_script_available = BY_LABEL[STRATEGY_DARVAS].script.is_file()
-        self.ticker = tk.StringVar(value=DEFAULT_TICKER)
-        self.strategy = tk.StringVar(value=STRATEGY_DARVAS)
+        self.bundled_script_available = BY_ID["darvas"].script.is_file()
+        self.ticker = tk.StringVar()
+        self.strategy = tk.StringVar(value=BY_ID["darvas"].display_name)
         self.status = tk.StringVar(value='Ready' if self.bundled_script_available else 'Bundled screener missing')
         self.events = Queue()
         self.runner = ScriptRunner(self.events)
@@ -51,7 +51,7 @@ class TradingApp(ctk.CTk):
         for column, text, padx in ((0, 'Ticker', (18, 8)), (1, 'Strategy', 8)):
             self._label(controls, text).grid(row=0, column=column, sticky='w', padx=padx, pady=(15, 3))
         ctk.CTkEntry(controls, textvariable=self.ticker, placeholder_text='e.g. NVDA, DOL.TO').grid(row=1, column=0, sticky='ew', padx=(18, 8), pady=(0, 12))
-        ctk.CTkOptionMenu(controls, variable=self.strategy, values=[strategy.label for strategy in REGISTERED_STRATEGIES]).grid(row=1, column=1, sticky='ew', padx=8, pady=(0, 12))
+        ctk.CTkOptionMenu(controls, variable=self.strategy, values=[strategy.display_name for strategy in REGISTERED_STRATEGIES]).grid(row=1, column=1, sticky='ew', padx=8, pady=(0, 12))
         self.run_button = ctk.CTkButton(controls, text='Run Analysis', command=self._start)
         self.run_button.grid(row=1, column=2, sticky='ew', padx=(8, 18), pady=(0, 12))
         self._label(controls, 'Darvas Strategy is bundled with this application', text_color='gray70').grid(row=2, column=0, columnspan=3, sticky='w', padx=18, pady=(0, 14))

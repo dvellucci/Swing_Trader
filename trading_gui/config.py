@@ -7,11 +7,6 @@ APP_NAME = 'Swing Trading Screener'
 WINDOW_SIZE = '980x720'
 MIN_WINDOW_SIZE = (760, 580)
 POLL_INTERVAL_MS = 100
-DEFAULT_TICKER = 'COST'
-STRATEGY_DARVAS = 'Darvas Strategy'
-STRATEGY_REVERSION = 'Mean Reversion'
-STRATEGY_MOVING = 'Moving Averages'
-STRATEGIES = (STRATEGY_DARVAS, STRATEGY_REVERSION, STRATEGY_MOVING)
 COLORS = {'neutral': '#374151', 'buy': '#166534', 'wait': '#92400e', 'reject': '#991b1b'}
 MESSAGES = {
     'intro': 'Ready. Darvas Strategy is bundled; enter a ticker to begin.\n',
