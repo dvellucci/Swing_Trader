@@ -22,9 +22,9 @@ class TradingApp(ctk.CTk):
         self.title(APP_NAME)
         self.geometry(WINDOW_SIZE)
         self.minsize(*MIN_WINDOW_SIZE)
-        self.bundled_script_available = BY_ID["darvas"].script.is_file()
+        self.bundled_script_available = any(s.script is not None and s.script.is_file() for s in REGISTERED_STRATEGIES)
         self.ticker = tk.StringVar()
-        self.strategy = tk.StringVar(value=BY_ID["darvas"].display_name)
+        self.strategy = tk.StringVar(value=next((s.display_name for s in REGISTERED_STRATEGIES if s.script is not None), ""))
         self.status = tk.StringVar(value='Ready' if self.bundled_script_available else 'Bundled screener missing')
         self.events = Queue()
         self.runner = ScriptRunner(self.events)
@@ -91,7 +91,10 @@ class TradingApp(ctk.CTk):
         self.output.configure(state='disabled')
 
     def _start(self):
-        selected = BY_LABEL[self.strategy.get()]
+        selected = BY_LABEL.get(self.strategy.get())
+        if selected is None:
+            messagebox.showerror("Unknown strategy", "Please select a registered strategy.")
+            return
         if selected.script is None:
             messagebox.showinfo('Coming soon', 'This strategy has not been implemented yet.')
             return
@@ -146,7 +149,7 @@ class TradingApp(ctk.CTk):
     def _on_done(self, result):
         self._finish()
         self.status.set('Completed' if result.code == 0 else f'Failed (exit code {result.code})')
-        report = find_new_report(result.script, result.ticker, result.started_at)
+        report = result.report_path if result.report_path and result.report_path.is_file() else find_new_report(result.script, result.ticker, result.started_at)
         if not report:
             self._append(MESSAGES['no_report'])
             return

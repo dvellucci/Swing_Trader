@@ -18,6 +18,7 @@ class Completed:
     script: Path
     ticker: str
     started_at: float
+    report_path: Path | None = None
 
 class ScriptRunner:
     def __init__(self, events: Queue):
@@ -35,6 +36,7 @@ class ScriptRunner:
 
     def _execute(self, script: Path, ticker: str) -> None:
         started_at = time.time()
+        report_path = None
         try:
             self.events.put(Event('line', f'Running: {script.name} {ticker}\n\n'))
             with subprocess.Popen([sys.executable, '-u', str(script), ticker], cwd=script.parent,
@@ -43,9 +45,11 @@ class ScriptRunner:
                 self.process = proc
                 assert proc.stdout is not None
                 for line in proc.stdout:
+                    if line.startswith('[launcher] Report: '):
+                        report_path = Path(line.split(': ', 1)[1].strip())
                     self.events.put(Event('line', line))
                 code = proc.wait()
-            self.events.put(Event('done', Completed(code, script, ticker, started_at)))
+            self.events.put(Event('done', Completed(code, script, ticker, started_at, report_path)))
         except Exception as exc:
             self.events.put(Event('error', str(exc)))
         finally:

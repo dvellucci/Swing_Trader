@@ -44,3 +44,22 @@ Mean Reversion and Moving Averages are intentionally marked coming soon; no fabr
 ## Limits
 
 The GUI and Python code were tested for compilation and offline unit tests. A live end-to-end market-data run and Windows GUI visual verification were not performed here. Your screener currently supports US stocks and CAD-quoted TSX symbols with `.TO`, as specified by its own validation. The application is a screener, not a brokerage order executor.
+
+
+## Refactor: shared strategy infrastructure
+
+The `core/` package contains reusable market-data retrieval/validation, typed
+strategy requests/results, and JSON result manifests. `strategies/darvas/strategy.py`
+is the strategy adapter; the original Darvas box rules remain in `darvas.py`.
+The GUI uses the registry for its dropdown and receives an exact report path
+from the launcher rather than relying exclusively on filename searches.
+
+To add a strategy, create an independent module under `strategies/`, register
+its ID/display name/launcher in `trading_gui/strategy_registry.py`, and
+use the shared `core.market_data` and `core.reporting` facilities. The GUI
+needs no strategy-specific imports. Multiple-symbol requests are supported
+by the shared request model; a future runner/launcher adapter will be needed
+for strategies that actually consume more than one symbol.
+
+Offline tests: `python -m unittest discover -s tests -v`.
+Live Yahoo Finance and Windows visual testing are not covered by offline tests.

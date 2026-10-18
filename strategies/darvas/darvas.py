@@ -56,7 +56,7 @@ def scan(data):
         raise ValueError('Nonempty daily data required')
     state = 'HIGH'
     candidate_high = candidate_low = None
-    high_date = low_date = None
+    high_date = low_date = ceiling_confirmed_date = None
     high_count = low_count = 0
     active = None
     box_id = 0
