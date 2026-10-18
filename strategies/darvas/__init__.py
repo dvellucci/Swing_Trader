@@ -1,1 +1,1 @@
-"""Darvas 3.1 screener, preserved from the supplied project."""
+"""Darvas Strategy screener, preserved from the supplied project."""

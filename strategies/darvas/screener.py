@@ -32,7 +32,7 @@ def supervise(command, folder, ticker, timeout):
     log_path = folder / f'{ticker}_debug.log'
     header = (f'STOCK DATA REPORT - {ticker}\nScript version: {VERSION}\n'
               f'Started: {datetime.now(timezone.utc).isoformat()}\n'
-              'Scope: Darvas 3.1 daily-data research; no order placement or fill confirmation.\n')
+              'Scope: Darvas Strategy daily-data research; no order placement or fill confirmation.\n')
     report.write_text(header+'Status: RUNNING - collection has not completed.\n', encoding='utf-8')
     preamble = (f'[launcher] Python: {sys.version.split()[0]}\n'
                 f'[launcher] Executable: {sys.executable}\n'

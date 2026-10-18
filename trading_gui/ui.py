@@ -54,7 +54,7 @@ class TradingApp(ctk.CTk):
         ctk.CTkOptionMenu(controls, variable=self.strategy, values=[strategy.label for strategy in REGISTERED_STRATEGIES]).grid(row=1, column=1, sticky='ew', padx=8, pady=(0, 12))
         self.run_button = ctk.CTkButton(controls, text='Run Analysis', command=self._start)
         self.run_button.grid(row=1, column=2, sticky='ew', padx=(8, 18), pady=(0, 12))
-        self._label(controls, 'Darvas 3.1 is bundled with this application', text_color='gray70').grid(row=2, column=0, columnspan=3, sticky='w', padx=18, pady=(0, 14))
+        self._label(controls, 'Darvas Strategy is bundled with this application', text_color='gray70').grid(row=2, column=0, columnspan=3, sticky='w', padx=18, pady=(0, 14))
 
         results = ctk.CTkFrame(self, corner_radius=12)
         results.grid(row=2, column=0, sticky='nsew', padx=24, pady=(0, 12))

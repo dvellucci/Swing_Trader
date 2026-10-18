@@ -1,4 +1,4 @@
-"""Darvas 3.1 daily-bar research: chronological three-following-session boxes.
+"""Darvas Strategy daily-bar research: chronological three-following-session boxes.
 
 This is a deterministic modern reconstruction, NOT a verified reproduction of
 Darvas's discretionary historical decisions. It never executes or simulates fills.
@@ -165,7 +165,7 @@ def report(data, events, active, currency, ticker='UNKNOWN', research_data=None)
     """
     last = events.iloc[-1]
     research_data = research_data or {}
-    lines = ['', 'DARVAS 3.1 - TECHNICAL CHECKS',
+    lines = ['', 'Darvas Strategy - TECHNICAL CHECKS',
              f'Ticker: {ticker}; As of: {last.Date}',
              f'Latest box event: {last.Event}; next state: {last.StateAfter}',
              'Strategy: three-session ceiling/floor confirmations; intraday buy-stop.',

@@ -1,13 +1,13 @@
 # Swing Trading Screener GUI — v0.3
 
-CustomTkinter desktop GUI with the **actual Darvas 3.1 screener** bundled in `strategies/darvas/`.
+CustomTkinter desktop GUI with the **actual Darvas screener** bundled in `strategies/darvas/`.
 
 ## Windows quick start
 
 1. Install Python 3.10 or newer (with the `py` launcher). Internet is required for first-time dependency installation and market data.
 2. Download/extract this complete repository (GitHub: **Code → Download ZIP**).
 3. Double-click `run_windows.bat`. It creates `.venv`, installs both GUI and strategy dependencies, and starts the GUI.
-4. Select **Darvas 3.1**, enter `NVDA` or `DOL.TO`, and click **Run Analysis**.
+4. Select **Darvas**, enter `NVDA` or `DOL.TO`, and click **Run Analysis**.
 
 No script browsing or hard-coded user paths. No separate strategy download required. The bundled screener writes run folders to `strategies/darvas/output/`, which the GUI discovers and opens. These generated files are ignored by Git.
 

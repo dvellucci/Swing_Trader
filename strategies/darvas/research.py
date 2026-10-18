@@ -1,4 +1,4 @@
-"""Best-effort fundamental and market research for Darvas 3.1.
+"""Best-effort fundamental and market research for Darvas Strategy.
 
 Qualitative evidence does not create hard filters. Failures are reported, never
 silently converted to favorable signals. Historical --as-of runs do not use

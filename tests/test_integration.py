@@ -4,7 +4,7 @@ from trading_gui.analysis import normalize_ticker
 
 class IntegrationTests(unittest.TestCase):
     def test_bundled_darvas_exists(self):
-        self.assertTrue(BY_LABEL['Darvas 3.1'].script.is_file())
+        self.assertTrue(BY_LABEL['Darvas Strategy'].script.is_file())
     def test_ticker_rules_match_darvas(self):
         from strategies.darvas.screener import ticker_arg
         for ticker in ['NVDA','DOL.TO','BBD-B.TO','BRK-B']:

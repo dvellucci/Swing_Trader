@@ -11,7 +11,7 @@ class Strategy:
     script: Path | None
 
 STRATEGIES = (
-    Strategy('darvas', 'Darvas 3.1', ROOT / 'strategies' / 'darvas' / 'screener.py'),
+    Strategy('darvas', 'Darvas Strategy', ROOT / 'strategies' / 'darvas' / 'screener.py'),
     Strategy('mean_reversion', 'Mean Reversion 4.0 (coming soon)', None),
     Strategy('moving_average', 'Moving Averages 5.0 (coming soon)', None),
 )

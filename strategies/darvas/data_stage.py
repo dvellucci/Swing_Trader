@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Darvas 3.1: single-stock daily OHLCV retrieval and box research. Python 3.10+.
+"""Darvas Strategy: single-stock daily OHLCV retrieval and box research. Python 3.10+.
 
 Install: python -m pip install -r requirements.txt
 Run:     python screener.py NVDA
