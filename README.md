@@ -1,4 +1,4 @@
-# Swing Trading Screener GUI — v0.3
+# Swing Trading Screener GUI — with Manual Positions
 
 CustomTkinter desktop GUI with the **actual Darvas screener** bundled in `strategies/darvas/`.
 
@@ -63,3 +63,30 @@ for strategies that actually consume more than one symbol.
 
 Offline tests: `python -m unittest discover -s tests -v`.
 Live Yahoo Finance and Windows visual testing are not covered by offline tests.
+
+## My Positions tab (manual trade journal)
+
+The desktop GUI now has two tabs: **Strategy Analysis** and **My Positions**.
+Use **+ Add Purchase** to record a real or paper purchase: ticker, strategy, date,
+share quantity, actual fill price, initial protective stop, currency, and notes.
+Open positions remain saved after restarting the app. The journal lives at
+`%USERPROFILE%\.swing_trading_gui\portfolio.sqlite3` on Windows (a local SQLite
+file outside the source repository). Back up this file to preserve your records.
+
+Each position offers **Update Price** (manual mark for unrealized P/L), **Raise
+Stop** (only higher protective stops are allowed), **Edit**, **Close Trade**
+(record actual exit and realized P/L), and **Delete** (requires confirmation).
+Enable **Show closed trades** to review completed trades. CAD and USD results
+are kept separate and never combined using an assumed FX rate. Values exclude
+commissions, spreads, taxes, and currency conversion costs.
+
+This feature does **not** connect to your broker, place orders, fetch live prices,
+automatically detect new Darvas boxes, or move stops for you. You must enter
+prices and any confirmed stop changes yourself. A BUY signal from Strategy
+Analysis does not create a position until you record the purchase.
+
+The portfolio is implemented independently of the trading strategies:
+`portfolio/models.py` (domain and validation), `portfolio/repository.py`
+(SQLite persistence), `portfolio/ui.py` (presentation). Tests are in
+`tests/test_portfolio.py`. Run all tests with
+`python -m unittest discover -s tests -v`.

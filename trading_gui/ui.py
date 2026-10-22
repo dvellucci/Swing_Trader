@@ -13,6 +13,7 @@ from .analysis import find_new_report, normalize_ticker, parse_verdict, verdict_
 from .config import (APP_NAME, COLORS, MESSAGES, MIN_WINDOW_SIZE,
                      POLL_INTERVAL_MS, WINDOW_SIZE)
 from .runner import ScriptRunner
+from portfolio.ui import PortfolioTab
 from .strategy_registry import BY_LABEL, BY_ID, STRATEGIES as REGISTERED_STRATEGIES
 
 
@@ -38,13 +39,21 @@ class TradingApp(ctk.CTk):
 
     def _build_ui(self):
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        header = ctk.CTkFrame(self, fg_color='transparent')
+        self.grid_rowconfigure(1, weight=1)
+        self.tabs = ctk.CTkTabview(self)
+        self.tabs.grid(row=1, column=0, sticky="nsew", padx=18, pady=(4, 12))
+        analysis_tab = self.tabs.add("Strategy Analysis")
+        positions_tab = self.tabs.add("My Positions")
+        analysis_tab.grid_columnconfigure(0, weight=1)
+        analysis_tab.grid_rowconfigure(2, weight=1)
+        self.portfolio_tab = PortfolioTab(positions_tab)
+        self.portfolio_tab.pack(fill="both", expand=True, padx=8, pady=8)
+        header = ctk.CTkFrame(analysis_tab, fg_color='transparent')
         header.grid(row=0, column=0, sticky='ew', padx=24, pady=(20, 10))
         self._label(header, APP_NAME, font=ctk.CTkFont(size=26, weight='bold')).pack(anchor='w')
         self._label(header, 'Run your Python strategies from one desktop dashboard', text_color='gray70').pack(anchor='w')
 
-        controls = ctk.CTkFrame(self, corner_radius=12)
+        controls = ctk.CTkFrame(analysis_tab, corner_radius=12)
         controls.grid(row=1, column=0, sticky='ew', padx=24, pady=10)
         for column, weight in enumerate((2, 2, 1)):
             controls.grid_columnconfigure(column, weight=weight)
@@ -56,7 +65,7 @@ class TradingApp(ctk.CTk):
         self.run_button.grid(row=1, column=2, sticky='ew', padx=(8, 18), pady=(0, 12))
         self._label(controls, 'Darvas Strategy is bundled with this application', text_color='gray70').grid(row=2, column=0, columnspan=3, sticky='w', padx=18, pady=(0, 14))
 
-        results = ctk.CTkFrame(self, corner_radius=12)
+        results = ctk.CTkFrame(analysis_tab, corner_radius=12)
         results.grid(row=2, column=0, sticky='nsew', padx=24, pady=(0, 12))
         results.grid_columnconfigure(0, weight=1)
         results.grid_rowconfigure(2, weight=1)
